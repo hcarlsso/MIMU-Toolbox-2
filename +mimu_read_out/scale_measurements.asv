@@ -12,7 +12,7 @@ function inertial_data_scaled = scale_measurements(inertial_data, varargin)
 % FS_SEL=2      32.8    LSB/(º/s)
 % FS_SEL=3      16.4    LSB/(º/s)
     
-    g = mimu_read_out.get_gravity_norm();
+    
     p = inputParser;
     
     addParameter(p, 'scale_acc', 2048/g, @(x) x > 0);

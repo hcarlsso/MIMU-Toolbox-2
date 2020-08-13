@@ -6,7 +6,9 @@ function plot_inertial_data(data, varargin)
     N_samples = size(data, 2);
     
     p = inputParser;
-    addParameter(p, 'time', 1:N_samples);        
+    addParameter(p, 'time', 1:N_samples);
+    addParameter(p, 'saturation', false);
+    
     parse(p,varargin{:});
     
     time = p.Results.time;
@@ -28,6 +30,14 @@ function plot_inertial_data(data, varargin)
     for i = 1:3
         axes{i} = subplot(3,1,i);
         plot(time, acc(i:3:end,:)')
+        if p.Results.saturation
+           hold on;
+           % Assume AFS_SEL = 3
+           g = mimu_read_out.get_gravity_norm();
+           sat = 16;
+           plot(time,  sat*g*ones(size(time)), '-r');
+           plot(time, -sat*g*ones(size(time)), '-r');
+        end
         grid on;
         title(['Accelerometer readings ', directions(i)]);
         xlabel(label)
@@ -41,6 +51,15 @@ function plot_inertial_data(data, varargin)
         axes{i} = subplot(3,1,i);
         subplot(3,1,i); hold on;
         plot(time, gyro(i:3:end,:)')
+        
+        if p.Results.saturation
+           hold on;
+           % Assume FS_SEL = 3
+           sat = 2000.0;
+           plot(time,  sat*ones(size(time)), '-r');
+           plot(time, -sat*ones(size(time)), '-r');
+        end
+        
         grid on;
         title(['Gyro ' directions(i)])
         title(['Gyroscope ', directions(i)]);
