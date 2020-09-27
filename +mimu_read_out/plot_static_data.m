@@ -2,6 +2,7 @@ function plot_static_data(ds)
 
     % acc
     figure(5);
+    set(gcf,'WindowStyle','docked')
     clf;
     direction = 'xyz';
     for j = 1:3

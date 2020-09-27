@@ -123,7 +123,7 @@ function [calibration_measurements,side_counter]=extract_stationary_segments(ine
     comb_inert = comb_inert(:,half_window_size+1:end-half_window_size);
     
     % Plotting 
-    figure(1), clf
+    figure(), clf
     set(gcf,'WindowStyle','docked')
     grid on
     handles = cell(2,1);
@@ -170,7 +170,7 @@ function [calibration_measurements,side_counter]=extract_stationary_segments(ine
     linkaxes([handles{:}],'x');
     
     
-    figure(2), clf
+    figure(), clf
     set(gcf,'WindowStyle','docked')
     subplot(2,1,1);
     plot(running_var(1:3,:)');
@@ -179,7 +179,7 @@ function [calibration_measurements,side_counter]=extract_stationary_segments(ine
     plot(running_var(4:6,:)');
     grid on
     
-    figure(3),clf
+    figure(),clf
     set(gcf,'WindowStyle','docked')
     plot(stat)
     hold on

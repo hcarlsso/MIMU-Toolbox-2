@@ -7,7 +7,9 @@ function plot_inertial_data(data, varargin)
     
     p = inputParser;
     addParameter(p, 'time', 1:N_samples);
-    addParameter(p, 'saturation', false);
+    addParameter(p, 'saturation_acc', -1);
+    addParameter(p, 'saturation_gyro', -1);
+    addParameter(p, 'title', '');
     
     parse(p,varargin{:});
     
@@ -26,11 +28,13 @@ function plot_inertial_data(data, varargin)
     % acc
     directions = 'xyz';
     figure(); 
+    sgtitle(p.Results.title);
+    set(gcf,'WindowStyle','docked')
     axes = cell(3,1);
     for i = 1:3
         axes{i} = subplot(3,1,i);
         plot(time, acc(i:3:end,:)')
-        if p.Results.saturation
+        if p.Results.saturation_acc > 0
            hold on;
            % Assume AFS_SEL = 3
            g = mimu_read_out.get_gravity_norm();
@@ -47,15 +51,18 @@ function plot_inertial_data(data, varargin)
     linkaxes([axes{:}]);
     
     figure(); 
+    sgtitle(p.Results.title);
+    set(gcf,'WindowStyle','docked')
     for i = 1:3
         axes{i} = subplot(3,1,i);
         subplot(3,1,i); hold on;
         plot(time, gyro(i:3:end,:)')
         
-        if p.Results.saturation
+        if p.Results.saturation_gyro > 0
            hold on;
            % Assume FS_SEL = 3
            sat = 2000.0;
+           sat = p.Results.saturation_gyro
            plot(time,  sat*ones(size(time)), '-r');
            plot(time, -sat*ones(size(time)), '-r');
         end

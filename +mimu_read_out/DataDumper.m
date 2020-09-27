@@ -23,7 +23,9 @@ classdef DataDumper < handle
         function obj = read_data(obj, com)
             if com.BytesAvailable > 0
                 data = fread(com, com.BytesAvailable, 'uint8');
-                obj.nof_bytes = obj.nof_bytes + fwrite(obj.file, data, 'uint8');
+                n_bytes = fwrite(obj.file, data, 'uint8');
+                obj.nof_bytes = obj.nof_bytes + n_bytes;
+                fprintf('%s: %d bytes\n', datestr(now,'HH:MM:SS.FFF'), n_bytes)
             end            
         end
         function obj = close(obj)

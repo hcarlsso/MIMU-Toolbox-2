@@ -5,6 +5,7 @@ function [static, dynamic, n_sample] = separate_static_and_dynamic(inertial_data
 
     p = inputParser;
     addParameter(p,'n_sample', 0);
+    addParameter(p,'n_sample_end', 0);
     parse(p,varargin{:});
     
 
@@ -54,10 +55,11 @@ function [static, dynamic, n_sample] = separate_static_and_dynamic(inertial_data
         n_sample = uint64(point(1));
     else
         n_sample = p.Results.n_sample;
+        n_sample_end = p.Results.n_sample_end;
     end
         
     static = inertial_data(:,1:n_sample); 
-    dynamic = inertial_data(:,n_sample+1:end); 
+    dynamic = inertial_data(:,n_sample+1:n_sample_end); 
     
 end
 

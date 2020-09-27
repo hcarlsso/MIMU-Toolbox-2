@@ -4,6 +4,7 @@ CLOCK_FREQ = 64e6;
 
 
 figure();
+set(gcf,'WindowStyle','docked')
 subplot(3,1,1);
 plot(double(time_stamps)'/CLOCK_FREQ,'b-');
 grid on
