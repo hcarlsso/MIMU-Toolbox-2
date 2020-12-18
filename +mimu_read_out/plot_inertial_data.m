@@ -10,6 +10,8 @@ function plot_inertial_data(data, varargin)
     addParameter(p, 'saturation_acc', -1);
     addParameter(p, 'saturation_gyro', -1);
     addParameter(p, 'title', '');
+    addParameter(p, 'dynamic_start', -1);
+    addParameter(p, 'dynamic_end', -1);
     
     parse(p,varargin{:});
     
@@ -42,6 +44,21 @@ function plot_inertial_data(data, varargin)
            plot(time,  sat*g*ones(size(time)), '-r');
            plot(time, -sat*g*ones(size(time)), '-r');
         end
+        
+        if p.Results.dynamic_start > 0
+            hold on;
+            y_range = ylim;
+            plot(p.Results.dynamic_start*ones(2,1),  y_range, '-r');
+            plot(p.Results.dynamic_start*ones(2,1),  y_range, '-r');
+        end
+        
+        if p.Results.dynamic_end > 0
+            hold on;
+            y_range = ylim();
+            plot(p.Results.dynamic_end*ones(2,1),  y_range, '-r');
+            plot(p.Results.dynamic_end*ones(2,1),  y_range, '-r');
+        end
+        
         grid on;
         title(['Accelerometer readings ', directions(i)]);
         xlabel(label)
@@ -62,9 +79,23 @@ function plot_inertial_data(data, varargin)
            hold on;
            % Assume FS_SEL = 3
            sat = 2000.0;
-           sat = p.Results.saturation_gyro
+           sat = p.Results.saturation_gyro;
            plot(time,  sat*ones(size(time)), '-r');
            plot(time, -sat*ones(size(time)), '-r');
+        end
+        
+        if p.Results.dynamic_start > 0
+            hold on;
+            y_range = ylim();
+            plot(p.Results.dynamic_start*ones(2,1),  y_range, '-r');
+            plot(p.Results.dynamic_start*ones(2,1),  y_range, '-r');
+        end
+        
+        if p.Results.dynamic_end > 0
+            hold on;
+            y_range = ylim();
+            plot(p.Results.dynamic_end*ones(2,1),  y_range, '-r');
+            plot(p.Results.dynamic_end*ones(2,1),  y_range, '-r');
         end
         
         grid on;
