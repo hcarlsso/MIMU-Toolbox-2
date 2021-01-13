@@ -1,5 +1,15 @@
 # MIMU-Toolbox
 
+# The RAW output format
+
+Each row group of 6:
+1, x axis acc.
+2, y axis acc.
+3, z axis acc.
+4, x axis gyro
+5, y axis gyro
+6, z axis gyro
+
 ## Transfer rate
 
 ### Bluetooth
