@@ -142,9 +142,18 @@ classdef MIMU < handle
             cmd = obj.command_to_execute;
         end
         function set_callback(obj, obj_container)
-
+            
+            % Specify number of bytes that must be available in input 
+            % buffer to generate bytes-available event
             obj.com.BytesAvailableFcnCount = 2000; % Should only depend on how fast computer process
+            
+            % Specify whether bytes-available event is generated after 
+            % specified number of bytes are available in input buffer, 
+            % or after terminator is read
             obj.com.BytesAvailableFcnMode = 'byte';
+            
+            % Specify callback function to execute when specified number 
+            % of bytes are available in input buffer, or terminator is read
             obj.com.BytesAvailableFcn = @obj_container.callback;
             obj.com.InputBufferSize = 1e6; % 0.5 Megabyte in input buffer size
         end
