@@ -1,4 +1,4 @@
-function [calibration_measurements,side_counter]=extract_stationary_segments(inertial_data, varargin)
+function [calibration_measurements,side_counter,start_and_end_points]=extract_stationary_segments(inertial_data, varargin)
 % Assume that they all are rotated to same frame and scaled
     p = inputParser;
     
@@ -7,6 +7,7 @@ function [calibration_measurements,side_counter]=extract_stationary_segments(ine
     addParameter(p,'max_period', 300, @(x) x > 0);
     addParameter(p,'threshold_factor', 2, @(x) x > 0);
     addParameter(p,'min_diff_of_sets', 500, @(x) x > 0);
+    addParameter(p,'plotting', true, @(x) islogical(x));
 
     
     parse(p,varargin{:});
@@ -16,6 +17,7 @@ function [calibration_measurements,side_counter]=extract_stationary_segments(ine
     max_period = p.Results.max_period;
     threshold_factor = p.Results.threshold_factor;
     min_diff_of_sets = p.Results.min_diff_of_sets;
+    plotting = p.Results.plotting;
     
     fprintf('Half window size: %d\n', half_window_size);
     fprintf('Min period: %d\n', min_period);
@@ -123,6 +125,7 @@ function [calibration_measurements,side_counter]=extract_stationary_segments(ine
     comb_inert = comb_inert(:,half_window_size+1:end-half_window_size);
     
     % Plotting 
+    if plotting
     figure(), clf
     set(gcf,'WindowStyle','docked')
     grid on
@@ -189,5 +192,6 @@ function [calibration_measurements,side_counter]=extract_stationary_segments(ine
     set(gca, "YScale", "log")
 
     legend("Runnning variance", "Threshold")
+    end
 end
 
